@@ -28,7 +28,9 @@ Os campos do site têm os mesmos nomes e a mesma ordem das perguntas nos formul�
 
 ## Tecnologias
 
-- HTML5, CSS3 e JavaScript puro, sem frameworks nem dependências de build.
+- HTML5: estrutura da página, com os textos, as seções e os formulários.
+- CSS3: aparência da página, com cores, tipografia e layout adaptável para celular e computador. Suporta o modo claro e o escuro.
+- JavaScript: validação dos campos e controle do botão de envio, sem frameworks nem dependências de build.
 - GitHub para versionamento do código.
 - Render para publicação da página como site estático.
 - Google Forms e Google Planilhas: recebem e armazenam os cadastros (uma planilha por formulário).
