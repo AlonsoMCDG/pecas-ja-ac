@@ -1,0 +1,314 @@
+<title>PeçasJá AC</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: one column, a dark green hero, then light sections, with the forms at the end. */
+:root {
+  --bg: #F6F5EF;
+  --surface: #FFFFFF;
+  --fg: #15211C;
+  --muted: #55645D;
+  --brand: #0E3B2E;
+  --brand-fg: #F6F5EF;
+  --accent: #E8A317;
+  --line: #DCDCD2;
+  --danger: #B3261E;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0C1714;
+    --surface: #132520;
+    --fg: #EEF2EF;
+    --muted: #A9B8B1;
+    --brand: #1E5A47;
+    --brand-fg: #F6F5EF;
+    --accent: #F0B436;
+    --line: #2A3F38;
+    --danger: #F2796F;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0C1714;
+  --surface: #132520;
+  --fg: #EEF2EF;
+  --muted: #A9B8B1;
+  --brand: #1E5A47;
+  --brand-fg: #F6F5EF;
+  --accent: #F0B436;
+  --line: #2A3F38;
+  --danger: #F2796F;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 980px; margin: 0 auto; }
+h1, h2, h3 {
+  font-family: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+  line-height: 1.1;
+  text-wrap: balance;
+  margin: 0 0 12px;
+}
+h1 { font-size: clamp(40px, 8vw, 72px); font-weight: 800; }
+h2 { font-size: clamp(30px, 5vw, 44px); font-weight: 700; }
+h3 { font-size: 24px; font-weight: 700; }
+p { margin: 0 0 12px; }
+.eyebrow {
+  font-family: "Barlow Condensed", Arial, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 15px;
+}
+
+/* header */
+header.top {
+  background: var(--brand);
+  color: var(--brand-fg);
+}
+header.top .wrap {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; padding-block: 14px; flex-wrap: wrap;
+}
+.logo {
+  font-family: "Barlow Condensed", Arial, sans-serif;
+  font-weight: 800; font-size: 26px; letter-spacing: .02em;
+}
+.logo span { color: var(--accent); }
+header.top a.nav {
+  color: var(--brand-fg); text-decoration: none; font-weight: 600;
+  border: 2px solid var(--accent); border-radius: 6px; padding: 6px 12px;
+}
+
+/* hero */
+.hero { background: var(--brand); color: var(--brand-fg); padding-block: 56px 64px; }
+.hero p.lead { font-size: 20px; max-width: 620px; opacity: .92; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+.btn {
+  display: inline-block; text-decoration: none; font-weight: 700;
+  padding: 12px 20px; border-radius: 6px; font-size: 17px; border: 2px solid transparent;
+}
+.btn-primary { background: var(--accent); color: #1A1A14; }
+.btn-ghost { border-color: var(--brand-fg); color: var(--brand-fg); }
+.btn:focus-visible, a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 3px solid var(--accent); outline-offset: 2px;
+}
+
+section.block { padding-block: 56px; }
+section.block.alt { background: var(--surface); border-block: 1px solid var(--line); }
+.grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+.card {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: 8px; padding: 20px;
+}
+.card ul { margin: 0; padding-left: 20px; }
+.card li { margin-bottom: 6px; }
+.muted { color: var(--muted); }
+
+/* steps */
+.steps { counter-reset: step; list-style: none; padding: 0; margin: 24px 0 0;
+  display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+.steps li { border-top: 4px solid var(--brand); padding-top: 12px; }
+.steps strong { display: block; font-family: "Barlow Condensed", Arial, sans-serif; font-size: 24px; }
+
+/* forms */
+form { display: grid; gap: 12px; margin-top: 16px; }
+label { display: grid; gap: 4px; font-weight: 600; font-size: 15px; }
+input, select, textarea {
+  font: inherit; color: var(--fg); background: var(--bg);
+  border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; width: 100%;
+}
+.check { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; font-size: 15px; }
+.check input { width: auto; margin-top: 5px; }
+.note { font-size: 14px; color: var(--muted); }
+.success {
+  display: none; border-left: 4px solid var(--brand); padding: 12px 16px;
+  background: var(--bg); border-radius: 6px; margin-top: 16px;
+}
+.success.show { display: block; }
+.btn-submit {
+  background: var(--brand); color: var(--brand-fg); border: 0; cursor: pointer;
+  font: inherit; font-weight: 700; padding: 12px 20px; border-radius: 6px; justify-self: start;
+}
+.two-forms { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); }
+
+/* data */
+.lgpd { font-size: 15px; color: var(--muted); }
+footer { padding-block: 32px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <div class="logo">PeçasJá <span>AC</span></div>
+    <a class="nav" href="#cadastro">Quero ser avisado</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Rio Branco · Acre</p>
+    <h1>Peça certa. Perto de você.</h1>
+    <p class="lead">Uma busca, várias lojas. Encontre a peça do seu carro ou moto nas lojas da cidade, compare preço e disponibilidade e escolha entre entrega ou retirada.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="#motoristas">Sou motorista ou oficina</a>
+      <a class="btn btn-ghost" href="#lojas">Tenho uma loja de peças</a>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <p class="eyebrow">O problema</p>
+    <h2>Encontrar uma peça não deveria levar o dia inteiro.</h2>
+    <p class="muted" style="max-width:680px">Hoje, quem precisa de uma peça liga para uma loja, depois para outra, manda mensagem no WhatsApp e, às vezes, sai de casa só para descobrir que o item não está disponível. O carro continua parado enquanto isso.</p>
+  </div>
+</section>
+
+<section class="block alt" id="como-funciona">
+  <div class="wrap">
+    <p class="eyebrow">Como funciona</p>
+    <h2>Da busca à entrega em quatro passos.</h2>
+    <ol class="steps">
+      <li><strong>1. Informe</strong>A peça, o veículo ou o código da peça.</li>
+      <li><strong>2. Encontre</strong>Lojas da região com a peça disponível.</li>
+      <li><strong>3. Compare</strong>Preço, disponibilidade e prazo, lado a lado.</li>
+      <li><strong>4. Receba</strong>Por entrega ou retirada na loja, com confirmação em cada etapa.</li>
+    </ol>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap grid">
+    <div class="card" id="motoristas">
+      <h3>Para motoristas e oficinas</h3>
+      <ul>
+        <li>Veja quem tem a peça antes de sair de casa.</li>
+        <li>Compare opções de lojas próximas em um único lugar.</li>
+        <li>Quando a peça não estiver disponível, deixe seu interesse e receba aviso quando ela chegar.</li>
+        <li>Oficinas podem usar a plataforma quando os fornecedores habituais não têm a peça.</li>
+      </ul>
+    </div>
+    <div class="card" id="lojas">
+      <h3>Para lojas parceiras</h3>
+      <ul>
+        <li>Um novo canal de vendas para os seus clientes.</li>
+        <li>Você define o preço, e o cliente vê esse mesmo valor.</li>
+        <li>Você controla o seu catálogo, preços e disponibilidade.</li>
+        <li>Cadastro inicial sem mensalidade. A plataforma cobra 10% de comissão apenas sobre as vendas feitas pelo app.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="block alt" id="cadastro">
+  <div class="wrap">
+    <p class="eyebrow">Entre na lista</p>
+    <h2>Quero ser avisado no lançamento</h2>
+    <p class="muted" style="max-width:680px">Estamos começando por Rio Branco. Preencha o formulário que corresponde a você. Entraremos em contato para o lançamento.</p>
+
+    <div class="two-forms" style="margin-top:28px">
+      <div class="card">
+        <h3>Sou motorista ou oficina</h3>
+        <form id="form-motorista">
+          <label>Nome
+            <input name="nome" required autocomplete="name">
+          </label>
+          <label>WhatsApp ou e-mail
+            <input name="contato" required autocomplete="tel">
+          </label>
+          <label>Bairro
+            <input name="bairro" required>
+          </label>
+          <label>Veículo
+            <select name="veiculo" required>
+              <option value="">Escolha</option>
+              <option>Carro</option>
+              <option>Moto</option>
+              <option>Oficina / centro automotivo</option>
+            </select>
+          </label>
+          <label>Modelo e ano do veículo
+            <input name="modelo" placeholder="Ex.: Honda Civic 2020">
+          </label>
+          <label>Peça que você procura
+            <input name="peca" placeholder="Ex.: pastilha de freio">
+          </label>
+          <label class="check">
+            <input type="checkbox" name="consent" required>
+            <span>Concordo que o PeçasJá use meus dados apenas para contato sobre o lançamento.</span>
+          </label>
+          <button class="btn-submit" type="submit">Quero ser avisado</button>
+          <div class="success" role="status">Obrigado! Você entrou na lista do PeçasJá AC.</div>
+        </form>
+      </div>
+
+      <div class="card">
+        <h3>Tenho uma loja de peças</h3>
+        <form id="form-loja">
+          <label>Nome da loja
+            <input name="loja" required>
+          </label>
+          <label>Responsável
+            <input name="responsavel" required>
+          </label>
+          <label>WhatsApp ou e-mail
+            <input name="contato" required>
+          </label>
+          <label>Bairro
+            <input name="bairro" required>
+          </label>
+          <label>Tipo de peças
+            <select name="tipo" required>
+              <option value="">Escolha</option>
+              <option>Carros</option>
+              <option>Motos</option>
+              <option>Carros e motos</option>
+            </select>
+          </label>
+          <label>Mensagem (opcional)
+            <textarea name="mensagem" rows="3"></textarea>
+          </label>
+          <label class="check">
+            <input type="checkbox" name="consent" required>
+            <span>Concordo que o PeçasJá use meus dados apenas para contato sobre o lançamento.</span>
+          </label>
+          <button class="btn-submit" type="submit">Quero cadastrar minha loja</button>
+          <div class="success" role="status">Obrigado! Entraremos em contato com sua loja.</div>
+        </form>
+      </div>
+    </div>
+    <p class="lgpd" style="margin-top:20px">Seus dados serão usados somente para contato sobre o lançamento do PeçasJá AC, conforme a Lei Geral de Proteção de Dados (Lei nº 13.709/2018). Você pode pedir a exclusão a qualquer momento.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>PeçasJá AC é um projeto acadêmico do curso de Sistemas de Informação da UFAC, em fase de validação em Rio Branco, Acre. Não somos uma loja e não temos vínculo com as marcas ou lojas citadas.</p>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll("form").forEach(function (form) {
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+    form.querySelector(".success").classList.add("show");
+    form.querySelector(".btn-submit").disabled = true;
+  });
+});
+</script>
