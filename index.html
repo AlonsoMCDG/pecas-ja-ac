@@ -139,6 +139,11 @@ input, select, textarea {
   background: var(--bg); border-radius: 6px; margin-top: 16px;
 }
 .success.show { display: block; }
+.btn-submit.sent {
+  background: #2E7D4F; color: #FFFFFF; opacity: .8; cursor: default;
+}
+.btn-submit.sent::before { content: "\2713  "; font-weight: 800; }
+.btn-submit:disabled { cursor: default; }
 .btn-submit {
   background: var(--brand); color: var(--brand-fg); border: 0; cursor: pointer;
   font: inherit; font-weight: 700; padding: 12px 20px; border-radius: 6px; justify-self: start;
@@ -158,6 +163,8 @@ footer { padding-block: 32px; color: var(--muted); font-size: 14px; border-top: 
     <a class="nav" href="#cadastro">Quero ser avisado</a>
   </div>
 </header>
+
+<iframe name="envio" title="Envio do formulário" style="display:none" aria-hidden="true"></iframe>
 
 <section class="hero">
   <div class="wrap">
@@ -224,18 +231,18 @@ footer { padding-block: 32px; color: var(--muted); font-size: 14px; border-top: 
     <div class="two-forms" style="margin-top:28px">
       <div class="card">
         <h3>Sou motorista ou oficina</h3>
-        <form id="form-motorista">
+        <form id="form-motorista" method="POST" action="https://docs.google.com/forms/d/e/1FAIpQLSdvKSeVwW0kaLkyIiCUArc0Tt8xRVGCze4O4ECsKPkbNwb9_w/formResponse" target="envio">
           <label>Nome
-            <input name="nome" required autocomplete="name">
+            <input name="entry.859794237" required autocomplete="name">
           </label>
           <label>WhatsApp ou e-mail
-            <input name="contato" required autocomplete="tel">
+            <input name="entry.1976939987" required autocomplete="tel">
           </label>
           <label>Bairro
-            <input name="bairro" required>
+            <input name="entry.768099778" required>
           </label>
           <label>Veículo
-            <select name="veiculo" required>
+            <select name="entry.385406706" required>
               <option value="">Escolha</option>
               <option>Carro</option>
               <option>Moto</option>
@@ -243,13 +250,13 @@ footer { padding-block: 32px; color: var(--muted); font-size: 14px; border-top: 
             </select>
           </label>
           <label>Modelo e ano do veículo
-            <input name="modelo" placeholder="Ex.: Honda Civic 2020">
+            <input name="entry.113002156" placeholder="Ex.: Honda Civic 2020">
           </label>
           <label>Peça que você procura
-            <input name="peca" placeholder="Ex.: pastilha de freio">
+            <input name="entry.1914341896" placeholder="Ex.: pastilha de freio">
           </label>
           <label class="check">
-            <input type="checkbox" name="consent" required>
+            <input type="checkbox" name="entry.1325250280" value="Concordo que o PeçasJá use meus dados apenas para contato sobre o lançamento." required>
             <span>Concordo que o PeçasJá use meus dados apenas para contato sobre o lançamento.</span>
           </label>
           <button class="btn-submit" type="submit">Quero ser avisado</button>
@@ -259,21 +266,21 @@ footer { padding-block: 32px; color: var(--muted); font-size: 14px; border-top: 
 
       <div class="card">
         <h3>Tenho uma loja de peças</h3>
-        <form id="form-loja">
+        <form id="form-loja" method="POST" action="https://docs.google.com/forms/d/e/1FAIpQLScd9FfPBeMIDxp5iMsRr-DA_MBaf3wJF4tS54WiQE2gNoOjzA/formResponse" target="envio">
           <label>Nome da loja
-            <input name="loja" required>
+            <input name="entry.960751937" required>
           </label>
           <label>Responsável
-            <input name="responsavel" required>
+            <input name="entry.646022789" required>
           </label>
           <label>WhatsApp ou e-mail
-            <input name="contato" required>
+            <input name="entry.2130757381" required>
           </label>
           <label>Bairro
-            <input name="bairro" required>
+            <input name="entry.1531888454" required>
           </label>
           <label>Tipo de peças
-            <select name="tipo" required>
+            <select name="entry.714283674" required>
               <option value="">Escolha</option>
               <option>Carros</option>
               <option>Motos</option>
@@ -281,10 +288,10 @@ footer { padding-block: 32px; color: var(--muted); font-size: 14px; border-top: 
             </select>
           </label>
           <label>Mensagem (opcional)
-            <textarea name="mensagem" rows="3"></textarea>
+            <textarea name="entry.1730930471" rows="3"></textarea>
           </label>
           <label class="check">
-            <input type="checkbox" name="consent" required>
+            <input type="checkbox" name="entry.212077739" value="Concordo que o PeçasJá use meus dados apenas para contato sobre o lançamento." required>
             <span>Concordo que o PeçasJá use meus dados apenas para contato sobre o lançamento.</span>
           </label>
           <button class="btn-submit" type="submit">Quero cadastrar minha loja</button>
@@ -304,11 +311,32 @@ footer { padding-block: 32px; color: var(--muted); font-size: 14px; border-top: 
 
 <script>
 document.querySelectorAll("form").forEach(function (form) {
+  var button = form.querySelector(".btn-submit");
+  var message = form.querySelector(".success");
+  var originalLabel = button.textContent;
+
+  function setIdle() {
+    button.textContent = originalLabel;
+    button.classList.remove("sent");
+    button.disabled = false;
+    message.classList.remove("show");
+  }
+
   form.addEventListener("submit", function (event) {
-    event.preventDefault();
-    if (!form.checkValidity()) { form.reportValidity(); return; }
-    form.querySelector(".success").classList.add("show");
-    form.querySelector(".btn-submit").disabled = true;
+    if (!form.checkValidity()) {
+      event.preventDefault();
+      form.reportValidity();
+      return;
+    }
+    // Sem preventDefault: o envio segue para o Google Forms pela iframe oculta.
+    button.textContent = "Enviado";
+    button.classList.add("sent");
+    button.disabled = true;
+    message.classList.add("show");
   });
+
+  // Qualquer alteração no formulário libera um novo envio.
+  form.addEventListener("input", setIdle);
+  form.addEventListener("change", setIdle);
 });
 </script>
